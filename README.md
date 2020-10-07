@@ -1,4 +1,4 @@
-# React Native Instagram Clone
+# React Native ShareStudy인증앱 Clone(인스타그램 기반으로 수정들어가는중)
 Instagram mobile app clone using React Native. I will add Activity screen and Add Pot screen in the future.
 
 [![Coverage Status](https://coveralls.io/repos/github/1hbb/react-native-instagram-clone/badge.svg?branch=master)](https://coveralls.io/github/1hbb/react-native-instagram-clone?branch=master)
