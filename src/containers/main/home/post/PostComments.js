@@ -8,7 +8,7 @@ export default function PostComments({post}) {
       style={{marginTop: 5, marginStart: 15}}
       onPress={() => console.log('Pressed Post Comments')}>
       <Text style={{color: colors.textFaded2}}>
-        View all {post.commentCount} comments
+        {/* View all {post.commentCount} comments */}
         댓글리스트 
       </Text>
     </TouchableOpacity>

@@ -8,7 +8,7 @@ export default function PostLikes({post}) {
       onPress={() => console.log('Pressed Post Likes')}
       style={{marginLeft: 15, marginTop: 10, marginEnd: 15}}>
       <Text style={{color: colors.text, fontWeight: 'bold'}}>
-        {post.likeCount} likes{' '}
+        {post.totallike} likes{' '}
       </Text>
     </TouchableOpacity>
   );

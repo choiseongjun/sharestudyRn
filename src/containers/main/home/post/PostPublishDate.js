@@ -12,7 +12,7 @@ export default function PostPublishDate({post}) {
           marginStart: 15,
           fontSize: 12,
         }}>
-        {post.publishDate}
+        {post.createdAt}
       </Text>
     </TouchableOpacity>
   );
