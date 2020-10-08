@@ -2,11 +2,9 @@ import React,{useState,useEffect} from 'react';
 import {FlatList, View} from 'react-native';
 import Post from './post/Post';
 import colors from '../../../res/colors';
-import {Text} from 'react-native';
-import {Image} from 'react-native';
-import images from 'res/images';
 import StoryContainer from './story/StoryContainer';
-import axios from 'axios';
+import { useSelector, useDispatch } from 'react-redux';
+import { LOAD_POSTS_REQUEST } from '../../../reducers/post';
 
 export default function homeScreen({navigation}) {
   const data = [
@@ -21,27 +19,16 @@ export default function homeScreen({navigation}) {
     {key: '9'},
     {key: '10'},
   ];
+  const dispatch = useDispatch();
   const [posts,setPosts] = useState([]);
   const storyOnPress = () => navigation.navigate('StoryScreen');
   useEffect(() => {
-    axios.get('http://192.168.1.30:8080/feed')
-    .then( response => { 
-      console.log(response.data)
-      setPosts(response.data); 
-    } ) // SUCCESS
-    .catch( response => { console.log(response); } ); // ERROR
-  }, [])
+    dispatch({
+      type: LOAD_POSTS_REQUEST
+    });
+  }, []) 
 
-  // const post = {
-  //   userName: 'John Doe',
-  //   placeName: 'Istanbul, Turkey',
-  //   imgUrl: 'https://picsum.photos/1920/1080',
-  //   likeCount: 103,
-  //   commentCount: 21,
-  //   text:
-  //     'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. A diam maecenas sed enim ut sem viverra.',
-  //   publishDate: new Date().toDateString(),
-  // };
+  const { mainPosts } = useSelector((state) => state.postReducer);
   const stories = [
     {
       key: 'JohnDoe',
@@ -78,7 +65,7 @@ export default function homeScreen({navigation}) {
   return (
     <FlatList
       style={{backgroundColor: colors.background}}
-      data={posts}
+      data={mainPosts}
       ListHeaderComponent={() => (
         <StoryContainer stories={stories} storyOnPress={storyOnPress} />
       )}
