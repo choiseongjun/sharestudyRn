@@ -8,6 +8,8 @@ import {TouchableOpacity} from 'react-native-gesture-handler';
 import DirectMessageScreen from './home/DirectMessage/DirectMessageScreen';
 import StoryScreen from './home/story/StoryScreen';
 import colors from '../../res/colors';
+import LoginScreen from '../../AppNavigator';
+import addPostScreen from './addPost/addPostScreen';
 
 export default function MainNavigator({navigation}) {
   const Stack = createStackNavigator();
@@ -19,6 +21,21 @@ export default function MainNavigator({navigation}) {
         component={TabNavigator}
         options={{title: '', headerShown: false}}
         NavigateToStoryCamera={NavigateToStoryCamera}
+      />
+      <Stack.Screen
+        name="LoginScreen"
+        component={LoginScreen}
+        options={{title: '', headerShown: false}}
+      />
+      <Stack.Screen
+        name="addPostScreen"
+        component={addPostScreen}
+        options={{
+          headerStyle: {
+            backgroundColor: colors.bottomBackGround,
+            shadowColor: colors.seperatorLineColor,
+          },
+        }}
       />
       <Stack.Screen
         name="StoryCameraScreen"

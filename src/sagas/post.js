@@ -99,7 +99,6 @@ function addPostAPI(data) {
 function* addPost(action) {
   try {
     const result = yield call(addPostAPI, action.data);
-    console.log(result.data)
     yield put({
       type: ADD_POST_SUCCESS,
       data: result.data,
@@ -186,14 +185,13 @@ function* unlikePost(action) {
   }
 }
 function addCommentAPI(data) {
-  console.log(data.id)
   return axios.post(`/feed/reply/${data.id}`, data); // POST /post/1/comment
 }
 
 function* addComment(action) {
   try {
     const result = yield call(addCommentAPI, action.data);
-    console.log(result)
+    
     yield put({
       type: ADD_COMMENT_SUCCESS,
       data: result.data,

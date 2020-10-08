@@ -1,5 +1,5 @@
 import React,{useState,useEffect} from 'react';
-import {FlatList, View} from 'react-native';
+import {FlatList,StyleSheet,TouchableOpacity,Image} from 'react-native';
 import Post from './post/Post';
 import colors from '../../../res/colors';
 import StoryContainer from './story/StoryContainer';
@@ -61,8 +61,12 @@ export default function homeScreen({navigation}) {
       src: 'https://picsum.photos/600',
     },
   ];
-
+  function FloatingButtonEvent(){
+    console.log('FloatingButtonEvent')
+    navigation.navigate('addPostScreen')
+  }
   return (
+    <>
     <FlatList
       style={{backgroundColor: colors.background}}
       data={mainPosts}
@@ -80,5 +84,26 @@ export default function homeScreen({navigation}) {
         <Post post={item} />
       )}
     />
+    <TouchableOpacity activeOpacity={0.5} onPress={FloatingButtonEvent} style={styles.TouchableOpacityStyle} >
+      <Image source={require('../../../assets/imgs/fbutton.png')}  style={styles.FloatingButtonStyle} />
+    </TouchableOpacity>
+    </>
   );
 }
+const styles = StyleSheet.create({
+  TouchableOpacityStyle: {
+    position: 'absolute',
+    width: 50,
+    height: 50,
+    alignItems: 'center',
+    justifyContent: 'center',
+    right: 30,
+    bottom: 30,
+  },
+  FloatingButtonStyle: {
+    resizeMode: 'contain',
+    width: 50,
+    height: 50,
+  },
+
+});

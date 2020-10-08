@@ -9,16 +9,7 @@ export default function addPostNavigator() {
 
   return (
     <Stack.Navigator>
-      <Stack.Screen
-        name="Add Post"
-        component={addPostScreen}
-        options={{
-          headerStyle: {
-            backgroundColor: colors.bottomBackGround,
-            shadowColor: colors.seperatorLineColor,
-          },
-        }}
-      />
+      
     </Stack.Navigator>
   );
 }

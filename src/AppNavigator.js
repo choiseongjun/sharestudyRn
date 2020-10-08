@@ -44,8 +44,6 @@ export default function AppNavigator() {
     }, [logInError,me]);
     const _signInAsync = useCallback (() => {
       //setValidate(true);
-      console.log(userid)
-      console.log(password)
       dispatch(loginRequestAction({ userid, password }));
     },[userid,password]);
     return (
