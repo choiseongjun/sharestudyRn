@@ -5,14 +5,23 @@ import postSaga from '../sagas/post';
 import userReducer from '../reducers/user';
 import postReducer from '../reducers/post';
 import axios from 'axios';
+import AsyncStorage from '@react-native-community/async-storage';
 
-axios.defaults.baseURL = 'http://172.30.1.46:8080';
+axios.defaults.baseURL = 'http://192.168.0.44:8080';
 // Add a request interceptor
+const token = AsyncStorage.getItem('user')
+  token.then((value) => {
+    axios.defaults.headers.common['Authorization'] = "Bearer "+value;
+  });
+
 // axios.interceptors.request.use(function (config) {
-//   const token = window.sessionStorage.getItem('user')
-//   config.headers.Authorization =  "Bearer "+token;
+//   const token = AsyncStorage.getItem('user')
+//   token.then((value) => {
+//     config.header.authorization =  "Bearer "+value;
+//     console.log("Bearer "+value)
+//   });
 //   return config;
-// });
+// }); 
 
 const rootReducer = combineReducers({
   userReducer,

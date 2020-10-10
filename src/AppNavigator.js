@@ -18,7 +18,7 @@ import images from 'res/images';
 import colors from './res/colors';
 import { useDispatch, useSelector } from 'react-redux';
 import { loginRequestAction } from './reducers/user';
-
+import AsyncStorage from '@react-native-community/async-storage';
 StatusBar.setBarStyle('light-content');
 
 
@@ -40,6 +40,7 @@ export default function AppNavigator() {
       }
       if(me){
         setValidate(true);
+        AsyncStorage.setItem('user',me)
       }
     }, [logInError,me]);
     const _signInAsync = useCallback (() => {
