@@ -40,7 +40,7 @@ function loadPostsAPI(data) {
     return axios.get('/feed', data);
 }
 function uploadImagesAPI(data) {
-  return axios.post('/feed/upload', data);
+  return axios.post('/mobile/feed/upload', data);
 }
 function* loadPosts(action) {
     try {
@@ -78,6 +78,7 @@ function* loadGallary(action) {
     }
 }
 function* uploadImages(action) {
+  console.log(action.data)
   try {
     const result = yield call(uploadImagesAPI, action.data);
     
