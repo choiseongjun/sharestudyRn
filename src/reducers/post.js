@@ -42,6 +42,7 @@ export const initialState = {
 export const LOAD_POSTS_REQUEST = 'LOAD_POSTS_REQUEST';
 export const LOAD_POSTS_SUCCESS = 'LOAD_POSTS_SUCCESS';
 export const LOAD_POSTS_FAILURE = 'LOAD_POSTS_FAILURE';
+export const LOAD_POSTS_INIT = 'LOAD_POSTS_INIT';
 //갤러리 조회
 export const LOAD_GALLARY_REQUEST = 'LOAD_GALLARY_REQUEST';
 export const LOAD_GALLARY_SUCCESS = 'LOAD_GALLARY_SUCCESS';
@@ -109,6 +110,9 @@ const postReducer = (state = initialState, action) => produce(state, (draft) => 
       case LOAD_POSTS_FAILURE:
         draft.loadPostsLoading = false;
         draft.loadPostsError = action.error;
+        break;
+      case LOAD_POSTS_INIT:
+        draft.loadPostsDone = false;
         break;
       case LOAD_GALLARY_REQUEST:
         draft.loadPostsLoading = true;

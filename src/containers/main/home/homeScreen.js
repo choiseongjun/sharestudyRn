@@ -4,7 +4,7 @@ import Post from './post/Post';
 import colors from '../../../res/colors';
 import StoryContainer from './story/StoryContainer';
 import { useSelector, useDispatch } from 'react-redux';
-import { LOAD_POSTS_REQUEST } from '../../../reducers/post';
+import { LOAD_POSTS_REQUEST,LOAD_POSTS_INIT } from '../../../reducers/post';
 
 export default function homeScreen({navigation}) {
   const data = [
@@ -21,14 +21,24 @@ export default function homeScreen({navigation}) {
   ];
   const dispatch = useDispatch();
   const [posts,setPosts] = useState([]);
+  const [refreshing,setRefreshing] = useState(false);
+  const { mainPosts,loadPostsDone } = useSelector((state) => state.postReducer);
   const storyOnPress = () => navigation.navigate('StoryScreen');
   useEffect(() => {
     dispatch({
       type: LOAD_POSTS_REQUEST
     });
-  }, []) 
 
-  const { mainPosts } = useSelector((state) => state.postReducer);
+    if(loadPostsDone){
+      setRefreshing(false)
+      dispatch({
+        type: LOAD_POSTS_INIT
+      });
+    }
+
+  }, [loadPostsDone]) 
+
+  
   const stories = [
     {
       key: 'JohnDoe',
@@ -65,6 +75,14 @@ export default function homeScreen({navigation}) {
     console.log('FloatingButtonEvent')
     navigation.navigate('addPostScreen')
   }
+  function handleRefresh(){//플랫리스트 리프레쉬 함수.
+    setRefreshing(true)
+
+    dispatch({
+      type: LOAD_POSTS_REQUEST
+    });
+  }
+
   return (
     <>
     <FlatList
@@ -83,6 +101,8 @@ export default function homeScreen({navigation}) {
         */
         <Post post={item} />
       )}
+      refreshing={refreshing}
+      onRefresh={handleRefresh}
     />
     <TouchableOpacity activeOpacity={0.5} onPress={FloatingButtonEvent} style={styles.TouchableOpacityStyle} >
       <Image source={require('../../../assets/imgs/fbutton.png')}  style={styles.FloatingButtonStyle} />
