@@ -3,7 +3,6 @@ import React,{ useCallback, useEffect,useState } from 'react';
 import {
   View,
   Text,
-  Button,
   TextInput,
   StyleSheet,
   Image,

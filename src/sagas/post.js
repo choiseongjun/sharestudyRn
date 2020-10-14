@@ -39,8 +39,8 @@ import {
 function loadPostsAPI(data) {
     return axios.get('/feed', data);
 }
-function uploadImagesAPI(data) {
-  return axios.post('/mobile/feed/upload', data);
+function uploadImagesAPI(formData) {
+  return axios.post('/mobile/feed/upload', formData);
 }
 function* loadPosts(action) {
     try {

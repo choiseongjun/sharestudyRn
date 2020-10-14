@@ -2,7 +2,6 @@ import React from 'react';
 import {Image, StyleSheet, Dimensions} from 'react-native';
 
 export default function PostImage({post}) {
-
    if (post.uploadfile.length === 1) {
     return <Image source={{uri: post.uploadfile[0].src}} style={Styles.postImg} />;
    }else if(post.uploadfile.length === 2){

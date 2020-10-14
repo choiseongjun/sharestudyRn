@@ -10,7 +10,7 @@ export default function PostHeader({post}) {
     <View style={Styles.container}>
       <View style={Styles.nameContainer}>
         <Image
-          source={{uri: 'https://picsum.photos/300'}}
+          source={{uri: post.userProfileImage.src}}
           style={Styles.personImage}
         />
         <View>
@@ -44,8 +44,8 @@ const Styles = StyleSheet.create({
     justifyContent: 'flex-start',
   },
   personImage: {
-    width: 30,
-    height: 30,
+    width: 50,
+    height: 50,
     borderRadius: 30,
   },
   personName: {

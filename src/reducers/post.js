@@ -5,6 +5,7 @@ export const initialState = {
     mainPosts: [],
     gallary:[],
     imagePaths: [],
+    resimgurl:[],//글쓸떄 이미지 첨부 담는용도
     postComment:[],
     hasMorePosts: true,
     loadPostsLoading: false,
@@ -49,12 +50,14 @@ export const LOAD_GALLARY_FAILURE = 'LOAD_GALLARY_FAILURE';
 export const UPLOAD_IMAGES_REQUEST = 'UPLOAD_IMAGES_REQUEST';
 export const UPLOAD_IMAGES_SUCCESS = 'UPLOAD_IMAGES_SUCCESS';
 export const UPLOAD_IMAGES_FAILURE = 'UPLOAD_IMAGES_FAILURE';
+export const UPLOAD_IMAGES_INIT = 'UPLOAD_IMAGES_INIT';
 //첨부한이미지 삭제
 export const REMOVE_IMAGE = 'REMOVE_IMAGE';
 //피드추가
 export const ADD_POST_REQUEST = 'ADD_POST_REQUEST';
 export const ADD_POST_SUCCESS = 'ADD_POST_SUCCESS';
 export const ADD_POST_FAILURE = 'ADD_POST_FAILURE';
+export const ADD_POST_INIT = 'ADD_POST_INIT';
 //피드삭제
 export const REMOVE_POST_REQUEST = 'REMOVE_POST_REQUEST';
 export const REMOVE_POST_SUCCESS = 'REMOVE_POST_SUCCESS';
@@ -90,7 +93,7 @@ export const addComment = (data) => ({
 });
 // 이전 상태를 액션을 통해 다음 상태로 만들어내는 함수(불변성은 지키면서)
 const postReducer = (state = initialState, action) => produce(state, (draft) => {
-    
+    console.log(action.data)
     switch (action.type) {
       case LOAD_POSTS_REQUEST:
         draft.loadPostsLoading = true;
@@ -129,9 +132,13 @@ const postReducer = (state = initialState, action) => produce(state, (draft) => 
         break;
       case UPLOAD_IMAGES_SUCCESS: {
         draft.imagePaths = action.data;
+        draft.resimgurl = action.data;
         draft.uploadImagesLoading = false;
         draft.uploadImagesDone = true;
         break;
+      }
+      case UPLOAD_IMAGES_INIT: {
+        draft.uploadImagesDone = false;
       }
       case UPLOAD_IMAGES_FAILURE:
         draft.uploadImagesLoading = false;
@@ -154,6 +161,9 @@ const postReducer = (state = initialState, action) => produce(state, (draft) => 
       case ADD_POST_FAILURE:
         draft.addPostLoading = false;
         draft.addPostError = action.error;
+        break;
+      case ADD_POST_INIT:
+        draft.addPostDone = false;
         break;
       case REMOVE_POST_REQUEST:
         draft.removePostLoading = true;

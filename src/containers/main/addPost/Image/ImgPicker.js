@@ -1,10 +1,10 @@
-import React,{useState,useCallback} from 'react';
-import { View,TextInput, Image, Button,ScrollView } from 'react-native';
+import React,{useState,useCallback,useEffect} from 'react';
+import { View,TextInput, Image, Button,ScrollView,StyleSheet } from 'react-native';
 //import ImagePicker from 'react-native-image-picker';
 import ImagePicker from "react-native-customized-image-picker";
-import { useDispatch,useSelector } from 'react-redux';
-import {UPLOAD_IMAGES_REQUEST,REMOVE_IMAGE,ADD_POST_REQUEST} from '../../../../reducers/post';
-import axios from 'axios';
+import { useDispatch } from 'react-redux';
+import {UPLOAD_IMAGES_REQUEST,REMOVE_IMAGE,ADD_POST_REQUEST,UPLOAD_IMAGES_INIT} from '../../../../reducers/post';
+import Spinner from 'react-native-loading-spinner-overlay';
 
 const UselessTextInput = (props) => {
   return (
@@ -15,20 +15,30 @@ const UselessTextInput = (props) => {
     />
   );
 }
-export default function ImgPicker(){
+export default function ImgPicker({resimgurl,uploadImagesDone}){
   
   const dispatch = useDispatch();
-
+  const [spinner,setSpinner] = useState(false)
   const [photo,setPhoto] = useState([]); 
-  const [resimgurl,setResimgurl] = useState([]); 
+  //const [resimgurl,setResimgurl] = useState([]); 
   const [content, setContent] = useState('');
+
+  useEffect(() => {
+    if(uploadImagesDone){
+      setSpinner(false)
+      dispatch({
+        type: UPLOAD_IMAGES_INIT
+      });
+
+    }
+  },[uploadImagesDone])
+
   const onSubmit = useCallback(() => {
     
+
     const formData = new FormData();
     resimgurl.forEach((p) => {
       formData.append('images',p);
-      console.log('files===')
-      console.log(p)
     });
     formData.append('content', content);
     return dispatch({
@@ -37,7 +47,7 @@ export default function ImgPicker(){
     });
   },[content, resimgurl])
   const handleChoosePhoto = () => {
-   
+    
     ImagePicker.openPicker({
       includeBase64:true,
       multiple: true
@@ -63,12 +73,16 @@ export default function ImgPicker(){
         //   }
         // })
       });
-      console.log(formData)
-      axios.post("http://192.168.0.44:8080/mobile/feed/upload",formData)
-      .then((res)=>{
-        console.log(res.data)
-        setResimgurl(res.data)
-      })
+      dispatch({
+          type: UPLOAD_IMAGES_REQUEST,
+          data: formData,
+      });
+      setSpinner(true)
+      // axios.post("http://192.168.1.252:8080/mobile/feed/upload",formData)
+      // .then((res)=>{
+      //   console.log(res.data)
+      //   setResimgurl(res.data)
+      // })
     });
    
   }
@@ -82,6 +96,11 @@ export default function ImgPicker(){
     ));
     return (
       <>
+      <Spinner
+          visible={spinner}
+          textContent={'Loading...'}
+          textStyle={styles.spinnerTextStyle}
+        />
       <View>
         <View
           style={{
@@ -110,3 +129,8 @@ export default function ImgPicker(){
       </>
     )
 }
+const styles = StyleSheet.create({
+  spinnerTextStyle: {
+    color: '#FFF'
+  }
+});

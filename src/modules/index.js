@@ -7,7 +7,7 @@ import postReducer from '../reducers/post';
 import axios from 'axios';
 import AsyncStorage from '@react-native-community/async-storage';
 
-axios.defaults.baseURL = 'http://192.168.0.44:8080';
+axios.defaults.baseURL = 'http://192.168.1.252:8080';
 // Add a request interceptor
 const token = AsyncStorage.getItem('user')
   token.then((value) => {
